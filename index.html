@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Streams</title>
+    <link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .thumbnail {
+            display: inline-block;
+            margin: 10px;
+            text-align: center;
+        }
+        .thumbnail img {
+            width: 200px;
+            height: 150px   ;
+            cursor: pointer;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+        }
+        .thumbnail img:hover {
+            border-color: #666;
+        }
+        #video-player{
+            width: 100%;
+            height: 715px;
+        }
+        /*#video-container {
+            margin-top: 20px;
+        }*/
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+
+
+<section>
+    <main>
+        <div class="container">
+            <div id="video-container" style="display: none;">
+                <video id="video-player" class="video-js" controls preload="auto" width="640" height="360"></video>
+            </div>
+        </div>
+    </main>
+</section>
+
+<div class="list mt-5">
+   <div class="container">
+    <div id="thumbnails-container"></div>
+   </div>
+</div>
+
+<script src="https://vjs.zencdn.net/7.14.3/video.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/videojs-contrib-hls@5.15.0/dist/videojs-contrib-hls.min.js"></script>
+<script>
+         const videoLinks = [
+         {
+                name: 'Star Jalsha',
+                src: 'http://103.109.56.116/live/funtime112/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/star_jalsa.png'
+            },
+            {
+                name: 'Zee Bangla',
+                src: 'http://103.109.56.116/live/funtime111/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/zee_bangla.jpg'
+            },
+            {
+                name: 'Colors Bangla',
+                src: 'http://103.109.56.116/live/skyfeed1017/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/Colors Bangla.jpg'
+            },
+            {
+                name: 'Sony AATH',
+                src: 'http://103.109.56.116/live/skyfeed1016/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/Sony_Aath_new.png'
+            },
+            {
+                name: 'Start Sports HD 2',
+                src: 'http://103.109.56.116/live/skyfeed1003/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/SS2HD.jpg'
+            },
+            {
+                name: 'PTV Sports',
+                src: 'http://103.109.56.116/live/funtime107/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/PTV_Sports.png'
+            },
+            {
+                name: 'Start Sports HD 1',
+                src: 'http://103.109.56.116/live/skyfeed1002/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/starspoerts1.jpg'
+            },
+            {
+                name: 'Sony Sports 1',
+                src: 'http://103.109.56.116/live/skyfeed1007/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/SONY_SportsTen1_HD.png'
+            },
+            {
+                name: 'Sony Sports 2 HD',
+                src: 'http://103.109.56.116/live/skyfeed1008/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/SONY_SportsTen2_HD.png'
+            },
+            {
+                name: 'Sports 18',
+                src: 'http://103.109.56.116/live/skyfeed1004/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/sports-18.jpg'
+            },
+            {
+                name: 'T-Sports',
+                src: 'http://103.109.56.116/live/skyfeed1005/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/T-Sports-Bangladesh-Logo.png'
+            },
+            {
+                name: 'GTV',
+                src: 'http://103.109.56.116/live/skyfeed1006/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/Gazi_TV.png'
+            },
+           
+            {
+                name: 'Nick',
+                src: 'http://103.109.56.116/live/funtime110/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/nick-logo-300x300.jpg'
+            },
+            {
+                name: 'Pogo',
+                src: 'http://103.109.56.116/live/skyfeed1019/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/Pogo.jpg'
+            },
+            {
+                name: 'Jamuna TV',
+                src: 'http://103.109.56.116/live/skyfeed1021/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/jamunatv.png'
+            },
+            {
+                name: 'Al Jazeera',
+                src: 'http://103.109.56.116/live/skyfeed1024/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/Al-Jazeera-Logo.jpg'
+            },
+            {
+                name: 'Somoy Tv',
+                src: 'http://103.109.56.116/live/skyfeed1014/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/somoy_tv.png'
+            },
+            {
+                name: 'Ekattor TV',
+                src: 'http://103.109.56.116/live/skyfeed1015/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/ekator.jpg'
+            },
+            {
+                name: 'DBC News',
+                src: 'http://103.109.56.116/live/funtime108/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/DBC.JPG'
+            },
+            {
+                name: 'news24',
+                src: 'http://103.109.56.116/live/funtime109/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/news24.jpg'
+            },
+            {
+                name: 'Bangla vision',
+                src: 'http://103.109.56.116/live/skyfeed1009/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/banglavision.png'
+            },
+            {
+                name: 'Independent TV',
+                src: 'http://103.109.56.116/live/skyfeed1012/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/Independent.jpg'
+            },
+            {
+                name: 'Animal Planet',
+                src: 'http://103.109.56.116/live/funtime1025/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/Animal Planet.jpg'
+            },
+            {
+                name: 'Al-Hajj-TV',
+                src: 'http://103.109.56.116/live/skyfeed1022/index.m3u8',
+                thumbnail: 'http://103.109.56.115/skynet@8080/ftpdata/live_TV/Al-Hajj-TV.jpg'
+            },
+        ];
+
+
+    const thumbnailsContainer = document.getElementById('thumbnails-container');
+    const videoContainer = document.getElementById('video-container');
+    const videoPlayer = videojs('video-player');
+
+
+           videoContainer.style.display = 'block';
+            videoPlayer.src({ src: 'http://103.109.56.116/live/funtime112/index.m3u8', type: 'application/x-mpegURL' });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            videoPlayer.play();
+
+
+    videoLinks.forEach(video => {
+
+        const thumbnailDiv = document.createElement('div');
+        thumbnailDiv.className = 'thumbnail';
+
+        const thumbnailImage = document.createElement('img');
+        thumbnailImage.src = video.thumbnail;
+        thumbnailImage.alt = video.name;
+        thumbnailImage.addEventListener('click', () => {
+            
+            videoContainer.style.display = 'block';
+            videoPlayer.src({ src: video.src, type: 'application/x-mpegURL' });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            videoPlayer.play();
+           
+        });
+
+        const thumbnailText = document.createElement('div');
+        thumbnailText.innerText = video.name;
+
+        thumbnailDiv.appendChild(thumbnailImage);
+        thumbnailDiv.appendChild(thumbnailText);
+        thumbnailsContainer.appendChild(thumbnailDiv);
+       
+
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+</body>
+</html>
